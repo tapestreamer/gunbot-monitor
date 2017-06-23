@@ -73,7 +73,7 @@ class TableData {
         chalk.cyan.bold('LL'),
         chalk.cyan.bold('OO?'),
         chalk.cyan.bold('# Coins'),
-        chalk.cyan.bold('in BTC'),
+        chalk.cyan.bold('in USDT'),
         chalk.cyan.bold('Diff since buy'),
         chalk.cyan.bold('Buy/Bought'),
         chalk.cyan.bold('Sell'),
@@ -94,7 +94,7 @@ class TableData {
         'right', // Last log time
         'left', // Oo?
         'right', // Coins
-        'right', // In BTC
+        'right', // In USDT
         'right', // Diff
         'right', // Buy / Bought price
         'right', // Price to sell
@@ -138,7 +138,7 @@ class TableData {
 
       Promise.all(allPromises)
         .then(values => {
-          let totalBTCValue = 0.0;
+          let totalUSDTValue = 0.0;
           let totalDiffSinceBuy = 0.0;
           let totalProfit = 0.0;
           let pm2Result = values[0];
@@ -170,12 +170,12 @@ class TableData {
               }
             }
 
-            if (!isNaN(parseFloat(formatter.btcValue(data.coins, data.lastPriceInBTC)))) {
-              totalBTCValue += parseFloat(formatter.btcValue(data.coins, data.lastPriceInBTC));
+            if (!isNaN(parseFloat(formatter.btcValue(data.coins, data.lastPriceInUSDT)))) {
+              totalUSDTValue += parseFloat(formatter.btcValue(data.coins, data.lastPriceInUSDT));
             }
 
-            if (!isNaN(parseFloat(formatter.currentProfit(data.coins, data.boughtPrice, data.lastPriceInBTC)))) {
-              totalDiffSinceBuy += parseFloat(formatter.currentProfit(data.coins, data.boughtPrice, data.lastPriceInBTC));
+            if (!isNaN(parseFloat(formatter.currentProfit(data.coins, data.boughtPrice, data.lastPriceInUSDT)))) {
+              totalDiffSinceBuy += parseFloat(formatter.currentProfit(data.coins, data.boughtPrice, data.lastPriceInUSDT));
             }
 
             if (!isNaN(parseFloat(data.profit))) {
@@ -189,8 +189,8 @@ class TableData {
               formatter.timeSince(data.lastTimeStamp),
               formatter.openOrders(data.openOrders || data.noOpenOrders),
               formatter.coins(data.coins),
-              formatter.btcValue(data.coins, data.lastPriceInBTC),
-              formatter.currentProfitWithPercent(data.coins, data.boughtPrice, data.lastPriceInBTC),
+              formatter.btcValue(data.coins, data.lastPriceInUSDT),
+              formatter.currentProfitWithPercent(data.coins, data.boughtPrice, data.lastPriceInUSDT),
               formatter.buyPrice(data.coins, data.boughtPrice, data.buyPrice),
               formatter.price(data.sellPrice),
               formatter.lastPrice(data.lastPrice, data.tendency),
@@ -212,8 +212,8 @@ class TableData {
             '',
             '',
             '',
-            chalk.bold(formatter.price(totalBTCValue)),
-            chalk.bold(formatter.totalCurrentProfit(totalBTCValue, totalDiffSinceBuy)),
+            chalk.bold(formatter.price(totalUSDTValue)),
+            chalk.bold(formatter.totalCurrentProfit(totalUSDTValue, totalDiffSinceBuy)),
             '',
             '',
             '',
