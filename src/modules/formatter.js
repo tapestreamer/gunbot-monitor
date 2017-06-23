@@ -25,16 +25,16 @@ class Formatter {
     return this.price(coins);
   }
 
-  currentProfit(numberOfCoins, boughtPrice, lastPriceInBTC) {
-    if (numberOfCoins === undefined || boughtPrice === undefined || lastPriceInBTC === undefined) {
+  currentProfit(numberOfCoins, boughtPrice, lastPriceInUSDT) {
+    if (numberOfCoins === undefined || boughtPrice === undefined || lastPriceInUSDT === undefined) {
       return chalk.gray('-');
     }
 
-    if (parseFloat(lastPriceInBTC) === 0 || parseFloat(boughtPrice) === 0) {
+    if (parseFloat(lastPriceInUSDT) === 0 || parseFloat(boughtPrice) === 0) {
       return chalk.gray('-');
     }
 
-    if (isNaN(parseFloat(lastPriceInBTC)) || isNaN(parseFloat(boughtPrice))) {
+    if (isNaN(parseFloat(lastPriceInUSDT)) || isNaN(parseFloat(boughtPrice))) {
       return chalk.gray('-');
     }
 
@@ -42,7 +42,7 @@ class Formatter {
       return chalk.gray('-');
     }
 
-    let diff = parseFloat(lastPriceInBTC) - parseFloat(boughtPrice);
+    let diff = parseFloat(lastPriceInUSDT) - parseFloat(boughtPrice);
     let profit = this.price(parseFloat(numberOfCoins) * diff);
 
     if (diff >= 0) {
@@ -52,14 +52,14 @@ class Formatter {
     return this.price(profit);
   }
 
-  currentProfitWithPercent(numberOfCoins, boughtPrice, lastPriceInBTC) {
-    let currentProfit = this.currentProfit(numberOfCoins, boughtPrice, lastPriceInBTC);
+  currentProfitWithPercent(numberOfCoins, boughtPrice, lastPriceInUSDT) {
+    let currentProfit = this.currentProfit(numberOfCoins, boughtPrice, lastPriceInUSDT);
 
     if (currentProfit === undefined || currentProfit === chalk.gray('-') || currentProfit === '-') {
       return chalk.gray('-');
     }
 
-    let diff = parseFloat(lastPriceInBTC) - parseFloat(boughtPrice);
+    let diff = parseFloat(lastPriceInUSDT) - parseFloat(boughtPrice);
     let profitPercent = diff * 100 / parseFloat(boughtPrice);
     let negativePadding = (profitPercent < 0) ? '' : ' ';
     let percentPadding = (profitPercent >= 10 || profitPercent <= -10) ? '' : ' ';
@@ -67,20 +67,20 @@ class Formatter {
     return `${this.profit(currentProfit)} ${negativePadding}${percentPadding}${chalk.gray(`${profitPercent.toFixed(1)}%`)}`;
   }
 
-  totalCurrentProfit(totalBTCValue, totalDiffSinceBuy) {
-    if (totalBTCValue === undefined || totalDiffSinceBuy === undefined) {
+  totalCurrentProfit(totalUSDTValue, totalDiffSinceBuy) {
+    if (totalUSDTValue === undefined || totalDiffSinceBuy === undefined) {
       return chalk.gray('-');
     }
 
-    if (parseFloat(totalBTCValue) === 0 || parseFloat(totalDiffSinceBuy) === 0) {
+    if (parseFloat(totalUSDTValue) === 0 || parseFloat(totalDiffSinceBuy) === 0) {
       return chalk.gray('-');
     }
 
-    if (isNaN(parseFloat(totalBTCValue)) || isNaN(parseFloat(totalDiffSinceBuy))) {
+    if (isNaN(parseFloat(totalUSDTValue)) || isNaN(parseFloat(totalDiffSinceBuy))) {
       return chalk.gray('-');
     }
 
-    let profitPercent = parseFloat(totalDiffSinceBuy) * 100 / parseFloat(totalBTCValue);
+    let profitPercent = parseFloat(totalDiffSinceBuy) * 100 / parseFloat(totalUSDTValue);
     let negativePadding = (profitPercent < 0) ? '' : ' ';
     let percentPadding = (profitPercent >= 10 || profitPercent <= -10) ? '' : ' ';
 
@@ -227,12 +227,12 @@ class Formatter {
     return chalk.gray('-');
   }
 
-  btcValue(numberOfCoins, lastPriceInBTC) {
-    if (numberOfCoins === undefined || lastPriceInBTC === undefined || parseFloat(numberOfCoins) === 0) {
+  btcValue(numberOfCoins, lastPriceInUSDT) {
+    if (numberOfCoins === undefined || lastPriceInUSDT === undefined || parseFloat(numberOfCoins) === 0) {
       return chalk.gray('-');
     }
 
-    return this.price(parseFloat(numberOfCoins) * parseFloat(lastPriceInBTC));
+    return this.price(parseFloat(numberOfCoins) * parseFloat(lastPriceInUSDT));
   }
 
   trades(numberOfTrades, lastTradeDate) {
